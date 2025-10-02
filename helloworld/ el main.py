@@ -8,24 +8,24 @@ import re
 
 app = Flask(__name__)
 
-# ----------- Función para extraer palabras clave ----------- #
+# ----------- Función para limpiar y extraer palabras clave ----------- #
 def extract_keywords(titles):
     words = []
     for title in titles:
         # Remover caracteres especiales y dividir en palabras
         tokens = re.findall(r'\b\w+\b', title.lower())
         words.extend(tokens)
-    
-    # Lista de palabras vacías comunes en español
+
+    # Lista de stopwords comunes en español
     stop_words = set([
-        "a", "de", "en", "y", "el", "la", "los", "las", 
+        "a", "de", "en", "y", "el", "la", "los", "las",
         "un", "una", "unos", "unas", "del", "al", "que", "por"
     ])
-    
+
     # Contar frecuencia de palabras ignorando stopwords
     keyword_counts = Counter(word for word in words if word not in stop_words)
-    
-    return keyword_counts.most_common(10)  # Top 10 palabras más comunes
+
+    return keyword_counts.most_common(10)  # Devuelve las 10 palabras más comunes
 
 
 # ----------- Plantilla HTML ----------- #
@@ -33,7 +33,7 @@ HTML_TEMPLATE = '''
 <!DOCTYPE html>
 <html>
 <head>
-    <title>SEO App</title>
+    <title>SEO Analyzer</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 20px; }
         h1 { color: #2c3e50; }
